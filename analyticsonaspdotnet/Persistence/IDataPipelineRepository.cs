@@ -1,0 +1,12 @@
+using analyticsonaspdotnet.Domain;
+
+namespace analyticsonaspdotnet.Persistence;
+
+public interface IDataPipelineRepository
+{
+    Task<DataPipeline?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<IReadOnlyList<DataPipeline>> GetAllAsync(CancellationToken cancellationToken);
+    Task AddAsync(DataPipeline dataPipeline, CancellationToken cancellationToken);
+    Task UpdateAsync(DataPipeline dataPipeline, CancellationToken cancellationToken);
+    Task DeleteAsync(DataPipeline dataPipeline, CancellationToken cancellationToken);
+}

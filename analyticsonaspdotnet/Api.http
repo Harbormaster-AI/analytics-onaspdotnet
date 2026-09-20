@@ -1,0 +1,5 @@
+@analyticsonaspdotnet.Api_HostAddress = http://localhost:5076
+
+GET {{analyticsonaspdotnet.Api_HostAddress}}/
+Accept: application/json
+

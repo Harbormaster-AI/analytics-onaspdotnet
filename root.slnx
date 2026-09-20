@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="analyticsonaspdotnet/analyticsonaspdotnet.Api.csproj" />
+  <Project Path="analyticsonaspdotnet/Tests/analyticsonaspdotnet.Tests.csproj" />
+</Solution>

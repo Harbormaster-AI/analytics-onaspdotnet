@@ -1,0 +1,136 @@
+using analyticsonaspdotnet.Domain;
+using analyticsonaspdotnet.Persistence;
+using analyticsonaspdotnet.Contracts;
+
+namespace analyticsonaspdotnet.Service;
+
+public interface INotebookService {
+
+    Task Create(Notebook model , CancellationToken cancellationToken);
+    Task<bool> Update(Notebook model, CancellationToken cancellationToken);
+    Task<Notebook?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
+    Task<IReadOnlyList<Notebook>> GetAll(CancellationToken cancellationToken);
+    Task<bool> Delete(IdentifierRequest identifier, CancellationToken cancellationToken);
+
+    // ------------------------------
+    // Single Associations
+    // -------------------------------
+    Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken);
+
+    Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> AddToExperiments(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> RemoveFromExperiments(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> AddToQueries(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> RemoveFromQueries(MultipleAssociationRequest request, CancellationToken cancellationToken);
+
+}
+
+public class NotebookService : INotebookService
+{
+    private readonly INotebookRepository _repository;
+    private readonly ILogger<NotebookService> _logger;
+
+    public NotebookService(
+        INotebookRepository repository, ILogger<NotebookService> logger )
+    {
+        _repository = repository;
+        _logger = logger;
+    }
+
+
+    public async Task Create(Notebook model, CancellationToken cancellationToken)
+    {
+
+         try
+        {
+            await _repository.AddAsync(model, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Unexpected Error: {ex.Message}");
+        }
+    }
+
+    public async Task<bool> Update(Notebook model, CancellationToken cancellationToken)
+    {
+        try {
+            var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
+            if (existing is null)
+            {
+                return false;
+            }
+            existing.Title = model.Title;
+            existing.Repository = model.Repository;
+            existing.Language = model.Language;
+
+            await _repository.UpdateAsync(existing, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Unexpected Error: {ex.Message}");
+            return false;
+        }
+        return true;
+    }
+
+    public Task<Notebook?> Get(IdentifierRequest identifier, CancellationToken cancellationToken)
+    => _repository.GetByIdAsync(identifier.Id, cancellationToken);
+
+    public Task<IReadOnlyList<Notebook>> GetAll(CancellationToken cancellationToken)
+    => _repository.GetAllAsync(cancellationToken);
+
+    public async Task<bool> Delete(IdentifierRequest identifier, CancellationToken cancellationToken)
+    {
+        var existing = await _repository.GetByIdAsync(identifier.Id, cancellationToken);
+        if (existing is null)
+        {
+            return false;
+        }
+
+        try
+        {
+            await _repository.DeleteAsync(existing, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Unexpected Error: {ex.Message}");
+            return false;
+        }
+        return true;
+
+    }
+
+    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+        return true;
+    }
+    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+        return true;
+    }
+
+
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        return true;
+    }
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        return true;
+    }
+
+    public async Task<bool> AddToExperiments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        return true;
+    }
+    public async Task<bool> RemoveFromExperiments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        return true;
+    }
+
+    public async Task<bool> AddToQueries(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        return true;
+    }
+    public async Task<bool> RemoveFromQueries(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        return true;
+    }
+
+
+
+}
