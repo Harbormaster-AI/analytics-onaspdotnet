@@ -35,7 +35,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum DataType
 {
-    String=1,Integer=2,Decimal=3,Boolean=4,Date=5,DateTime=6
+    String=1,Integer=2,Decimal=3,Boolean=4,Date=5,DateTime_=6
 }
 
 /// <summary>

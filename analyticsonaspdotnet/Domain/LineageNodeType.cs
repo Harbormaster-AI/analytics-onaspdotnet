@@ -35,7 +35,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum LineageNodeType
 {
-    Dataset=1,Pipeline=2,Model=3,Dashboard=4,Report=5,FeatureSet=6,Notebook=7
+    Dataset=1,Pipeline=2,Model_=3,Dashboard=4,Report=5,FeatureSet=6,Notebook=7
 }
 
 /// <summary>

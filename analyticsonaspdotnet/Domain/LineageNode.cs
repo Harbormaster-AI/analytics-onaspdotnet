@@ -13,7 +13,7 @@ public virtual AnalyticsWorkspace? Workspace { get; set; }
 public virtual ICollection<LineageNode> Inputs { get; set; } = new List<LineageNode>();
 public virtual ICollection<LineageNode> Outputs { get; set; } = new List<LineageNode>();
 public virtual ICollection<DataSet> Datasets { get; set; } = new List<DataSet>();
-public virtual ICollection<Model> Models { get; set; } = new List<Model>();
+public virtual ICollection<Model_> Models { get; set; } = new List<Model_>();
 public virtual ICollection<DataPipeline> Pipelines { get; set; } = new List<DataPipeline>();
 public virtual ICollection<Dashboard> Dashboards { get; set; } = new List<Dashboard>();
 public virtual ICollection<Report> Reports { get; set; } = new List<Report>();

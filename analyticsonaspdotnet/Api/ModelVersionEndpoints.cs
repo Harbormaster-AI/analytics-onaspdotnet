@@ -16,8 +16,8 @@ public static class ModelVersionEndpoints
         group.MapPost("/update", Update);
         group.MapPost("/delete", Delete);
 
-        group.MapPut("/assignModel", AssignModel);
-        group.MapPut("/unassignModel", UnassignModel);
+        group.MapPut("/assignModel_", AssignModel_);
+        group.MapPut("/unassignModel_", UnassignModel_);
         group.MapPut("/assignTrainingRun", AssignTrainingRun);
         group.MapPut("/unassignTrainingRun", UnassignTrainingRun);
 
@@ -101,19 +101,19 @@ public static class ModelVersionEndpoints
         return deleted ? Results.NoContent() : Results.NotFound();
     }
 
-    private static async Task<IResult> AssignModel(
+    private static async Task<IResult> AssignModel_(
         AssociationRequest request,
         IModelVersionService service,
         CancellationToken cancellationToken) {
-        var assigned = await service.AssignModel(request, cancellationToken);
+        var assigned = await service.AssignModel_(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
 
-    private static async Task<IResult> UnassignModel(
+    private static async Task<IResult> UnassignModel_(
     AssociationRequest request,
     IModelVersionService service,
     CancellationToken cancellationToken) {
-        var unassigned = await service.UnassignModel(request, cancellationToken);
+        var unassigned = await service.UnassignModel_(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 

@@ -8,7 +8,7 @@ public class DataSource
 
  public virtual long? DatasourceId { get; set; } 
  public virtual string? Name { get; set; } 
- public virtual ConnectionInfo? Connection { get; set; } 
+ public virtual ConnectionInfo_? Connection { get; set; } 
  public virtual bool? Streaming { get; set; } 
 public virtual AnalyticsWorkspace? Workspace { get; set; } 
 public virtual ICollection<DataSet> ProducedDatasets { get; set; } = new List<DataSet>();

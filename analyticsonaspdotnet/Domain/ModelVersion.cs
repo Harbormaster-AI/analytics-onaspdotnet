@@ -8,7 +8,7 @@ public class ModelVersion
 
  public virtual long? ModelversionId { get; set; } 
  public virtual string? Version { get; set; } 
-public virtual Model? Model { get; set; } 
+public virtual Model_? Model_ { get; set; } 
 public virtual TrainingRun? TrainingRun { get; set; } 
 public virtual ICollection<EvaluationMetric> EvaluationMetrics { get; set; } = new List<EvaluationMetric>();
 public virtual ICollection<InferenceEndpoint> Deployments { get; set; } = new List<InferenceEndpoint>();

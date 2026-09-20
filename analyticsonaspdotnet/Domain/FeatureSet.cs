@@ -12,7 +12,7 @@ public class FeatureSet
 public virtual AnalyticsWorkspace? Workspace { get; set; } 
 public virtual ICollection<Feature> Features { get; set; } = new List<Feature>();
 public virtual ICollection<DataSet> Datasets { get; set; } = new List<DataSet>();
-public virtual ICollection<Model> Models { get; set; } = new List<Model>();
+public virtual ICollection<Model_> Models { get; set; } = new List<Model_>();
 public virtual ICollection<ModelVersion> ModelVersions { get; set; } = new List<ModelVersion>();
 public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
  public virtual FeatureStoreType? StoreType { get; set; } 

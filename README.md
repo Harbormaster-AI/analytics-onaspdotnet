@@ -40,7 +40,7 @@ Experiment
 TrainingRun
 RunMetric
 RunParameter
-Model
+Model_
 ModelVersion
 EvaluationMetric
 FeatureSet
@@ -64,7 +64,7 @@ FraudSignal
 
 ## #Value Objects
 
-ConnectionInfo
+ConnectionInfo_
 CronSchedule
 Threshold
 ChartOptions

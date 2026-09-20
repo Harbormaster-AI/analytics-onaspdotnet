@@ -42,7 +42,7 @@ public class AnalyticsWorkspaceResponse : AnalyticsWorkspaceRequest {
 public class DataSourceRequest {
     public Guid Id { get; set; } = Guid.NewGuid();
  public virtual string? Name { get; set; } 
- public virtual ConnectionInfo? Connection { get; set; } 
+ public virtual ConnectionInfo_? Connection { get; set; } 
  public virtual bool? Streaming { get; set; } 
  public virtual DataSourceType? SourceType { get; set; } 
  public virtual DataFormat? Format { get; set; } 
@@ -357,16 +357,16 @@ public class RunParameterResponse : RunParameterRequest {
     }
 }
 
-public class ModelRequest {
+public class Model_Request {
     public Guid Id { get; set; } = Guid.NewGuid();
  public virtual string? Name { get; set; } 
  public virtual string? TaskDescription { get; set; } 
  public virtual ModelType? ModelType { get; set; } 
 }
 
-public class ModelResponse : ModelRequest {
-    public static ModelResponse FromModel(Model model) {
-        return new ModelResponse {
+public class Model_Response : Model_Request {
+    public static Model_Response FromModel(Model_ model) {
+        return new Model_Response {
             Id = model.Id,
             Name = model.Name,
             TaskDescription = model.TaskDescription,
@@ -545,7 +545,7 @@ public class QualityRuleRequest {
  public virtual Threshold? Threshold { get; set; } 
  public virtual string? TargetField { get; set; } 
  public virtual QualityDimension? Dimension { get; set; } 
- public virtual ComparisonOperator? Operator { get; set; } 
+ public virtual ComparisonOperator? Operator_ { get; set; } 
 }
 
 public class QualityRuleResponse : QualityRuleRequest {
@@ -556,7 +556,7 @@ public class QualityRuleResponse : QualityRuleRequest {
             Threshold = model.Threshold,
             TargetField = model.TargetField,
             Dimension = model.Dimension,
-            Operator = model.Operator,
+            Operator_ = model.Operator_,
         };
     }
 }

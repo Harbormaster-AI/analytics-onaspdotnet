@@ -9,7 +9,7 @@ public class FraudScenario
  public virtual long? FraudscenarioId { get; set; } 
  public virtual string? Name { get; set; } 
  public virtual string? RiskAppetite { get; set; } 
-public virtual ICollection<Model> Models { get; set; } = new List<Model>();
+public virtual ICollection<Model_> Models { get; set; } = new List<Model_>();
 public virtual ICollection<DataSet> Datasets { get; set; } = new List<DataSet>();
 public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
 public virtual ICollection<FraudSignal> Signals { get; set; } = new List<FraudSignal>();

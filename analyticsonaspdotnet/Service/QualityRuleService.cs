@@ -61,7 +61,7 @@ public class QualityRuleService : IQualityRuleService
             existing.Threshold = model.Threshold;
             existing.TargetField = model.TargetField;
             existing.Dimension = model.Dimension;
-            existing.Operator = model.Operator;
+            existing.Operator_ = model.Operator_;
 
             await _repository.UpdateAsync(existing, cancellationToken);
         }

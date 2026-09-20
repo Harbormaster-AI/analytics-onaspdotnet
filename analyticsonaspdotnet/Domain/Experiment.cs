@@ -11,7 +11,7 @@ public class Experiment
  public virtual string? Objective { get; set; } 
 public virtual AnalyticsWorkspace? Workspace { get; set; } 
 public virtual ICollection<TrainingRun> TrainingRuns { get; set; } = new List<TrainingRun>();
-public virtual ICollection<Model> Models { get; set; } = new List<Model>();
+public virtual ICollection<Model_> Models { get; set; } = new List<Model_>();
 public virtual ICollection<Notebook> Notebooks { get; set; } = new List<Notebook>();
  public virtual ExperimentStatus? Status { get; set; } 
 

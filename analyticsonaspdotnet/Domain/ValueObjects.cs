@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace analyticsonaspdotnet.Domain;
 
     [ComplexType]
-    public record ConnectionInfo(
+    public record ConnectionInfo_(
     string Host,
     int Port,
     string Database,

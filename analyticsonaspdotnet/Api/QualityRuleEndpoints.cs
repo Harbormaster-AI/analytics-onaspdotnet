@@ -130,7 +130,7 @@ public static class QualityRuleEndpoints
             Threshold = request.Threshold,
             TargetField = request.TargetField,
             Dimension = request.Dimension,
-            Operator = request.Operator,
+            Operator_ = request.Operator_,
         };
         return model;
     }

@@ -13,7 +13,7 @@ public class QualityRule
 public virtual DataSet? Dataset { get; set; } 
 public virtual ICollection<QualityCheck> Checks { get; set; } = new List<QualityCheck>();
  public virtual QualityDimension? Dimension { get; set; } 
- public virtual ComparisonOperator? Operator { get; set; } 
+ public virtual ComparisonOperator? Operator_ { get; set; } 
 
     public static QualityRule FromRequest(QualityRuleRequest request) {
         return new QualityRule {
@@ -22,7 +22,7 @@ public virtual ICollection<QualityCheck> Checks { get; set; } = new List<Quality
             Threshold = request.Threshold,
             TargetField = request.TargetField,
             Dimension = request.Dimension,
-            Operator = request.Operator,
+            Operator_ = request.Operator_,
         };
     }
 }

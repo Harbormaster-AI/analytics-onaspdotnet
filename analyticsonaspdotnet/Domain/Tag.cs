@@ -9,7 +9,7 @@ public class Tag
  public virtual long? TagId { get; set; } 
  public virtual string? Name { get; set; } 
 public virtual ICollection<DataSet> Datasets { get; set; } = new List<DataSet>();
-public virtual ICollection<Model> Models { get; set; } = new List<Model>();
+public virtual ICollection<Model_> Models { get; set; } = new List<Model_>();
 public virtual ICollection<ModelVersion> ModelVersions { get; set; } = new List<ModelVersion>();
 public virtual ICollection<Dashboard> Dashboards { get; set; } = new List<Dashboard>();
 public virtual ICollection<Report> Reports { get; set; } = new List<Report>();

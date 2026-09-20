@@ -15,7 +15,7 @@ public class ModelVersionRepository : IModelVersionRepository
     public async Task<ModelVersion?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _db.ModelVersions
-            .Include(x => x.Model)
+            .Include(x => x.Model_)
             .Include(x => x.TrainingRun)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
@@ -24,7 +24,7 @@ public class ModelVersionRepository : IModelVersionRepository
     {
         return await _db.ModelVersions
             .AsNoTracking()
-            .Include(x => x.Model)
+            .Include(x => x.Model_)
             .Include(x => x.TrainingRun)
             .ToListAsync(cancellationToken);
     }
