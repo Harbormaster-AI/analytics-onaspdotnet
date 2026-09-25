@@ -11,45 +11,45 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-public DbSet<AnalyticsWorkspace> AnalyticsWorkspaces => Set<AnalyticsWorkspace>();
-public DbSet<DataSource> DataSources => Set<DataSource>();
-public DbSet<DataSet> DataSets => Set<DataSet>();
-public DbSet<DataPipeline> DataPipelines => Set<DataPipeline>();
-public DbSet<DataTask> DataTasks => Set<DataTask>();
-public DbSet<SemanticModel> SemanticModels => Set<SemanticModel>();
-public DbSet<Dimension> Dimensions => Set<Dimension>();
-public DbSet<Measure> Measures => Set<Measure>();
-public DbSet<Metric> Metrics => Set<Metric>();
-public DbSet<Report> Reports => Set<Report>();
-public DbSet<Dashboard> Dashboards => Set<Dashboard>();
-public DbSet<Visualization> Visualizations => Set<Visualization>();
-public DbSet<Notebook> Notebooks => Set<Notebook>();
-public DbSet<BIQuery> BIQuerys => Set<BIQuery>();
-public DbSet<Experiment> Experiments => Set<Experiment>();
-public DbSet<TrainingRun> TrainingRuns => Set<TrainingRun>();
-public DbSet<RunMetric> RunMetrics => Set<RunMetric>();
-public DbSet<RunParameter> RunParameters => Set<RunParameter>();
-public DbSet<Model_> Model_s => Set<Model_>();
-public DbSet<ModelVersion> ModelVersions => Set<ModelVersion>();
-public DbSet<EvaluationMetric> EvaluationMetrics => Set<EvaluationMetric>();
-public DbSet<FeatureSet> FeatureSets => Set<FeatureSet>();
-public DbSet<Feature> Features => Set<Feature>();
-public DbSet<InferenceEndpoint> InferenceEndpoints => Set<InferenceEndpoint>();
-public DbSet<Prediction> Predictions => Set<Prediction>();
-public DbSet<Forecast> Forecasts => Set<Forecast>();
-public DbSet<TimeSeries> TimeSeriess => Set<TimeSeries>();
-public DbSet<Anomaly> Anomalys => Set<Anomaly>();
-public DbSet<QualityRule> QualityRules => Set<QualityRule>();
-public DbSet<QualityCheck> QualityChecks => Set<QualityCheck>();
-public DbSet<LineageNode> LineageNodes => Set<LineageNode>();
-public DbSet<Tag> Tags => Set<Tag>();
-public DbSet<AccessPolicy> AccessPolicys => Set<AccessPolicy>();
-public DbSet<Alert> Alerts => Set<Alert>();
-public DbSet<Subscriber> Subscribers => Set<Subscriber>();
-public DbSet<BusinessGlossaryTerm> BusinessGlossaryTerms => Set<BusinessGlossaryTerm>();
-public DbSet<RecommendationScenario> RecommendationScenarios => Set<RecommendationScenario>();
-public DbSet<FraudScenario> FraudScenarios => Set<FraudScenario>();
-public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
+    public DbSet<AnalyticsWorkspace> AnalyticsWorkspaces => Set<AnalyticsWorkspace>();
+    public DbSet<DataSource> DataSources => Set<DataSource>();
+    public DbSet<DataSet> DataSets => Set<DataSet>();
+    public DbSet<DataPipeline> DataPipelines => Set<DataPipeline>();
+    public DbSet<DataTask> DataTasks => Set<DataTask>();
+    public DbSet<SemanticModel> SemanticModels => Set<SemanticModel>();
+    public DbSet<Dimension> Dimensions => Set<Dimension>();
+    public DbSet<Measure> Measures => Set<Measure>();
+    public DbSet<Metric> Metrics => Set<Metric>();
+    public DbSet<Report> Reports => Set<Report>();
+    public DbSet<Dashboard> Dashboards => Set<Dashboard>();
+    public DbSet<Visualization> Visualizations => Set<Visualization>();
+    public DbSet<Notebook> Notebooks => Set<Notebook>();
+    public DbSet<BIQuery> BIQuerys => Set<BIQuery>();
+    public DbSet<Experiment> Experiments => Set<Experiment>();
+    public DbSet<TrainingRun> TrainingRuns => Set<TrainingRun>();
+    public DbSet<RunMetric> RunMetrics => Set<RunMetric>();
+    public DbSet<RunParameter> RunParameters => Set<RunParameter>();
+    public DbSet<Model_> Model_s => Set<Model_>();
+    public DbSet<ModelVersion> ModelVersions => Set<ModelVersion>();
+    public DbSet<EvaluationMetric> EvaluationMetrics => Set<EvaluationMetric>();
+    public DbSet<FeatureSet> FeatureSets => Set<FeatureSet>();
+    public DbSet<Feature> Features => Set<Feature>();
+    public DbSet<InferenceEndpoint> InferenceEndpoints => Set<InferenceEndpoint>();
+    public DbSet<Prediction> Predictions => Set<Prediction>();
+    public DbSet<Forecast> Forecasts => Set<Forecast>();
+    public DbSet<TimeSeries> TimeSeriess => Set<TimeSeries>();
+    public DbSet<Anomaly> Anomalys => Set<Anomaly>();
+    public DbSet<QualityRule> QualityRules => Set<QualityRule>();
+    public DbSet<QualityCheck> QualityChecks => Set<QualityCheck>();
+    public DbSet<LineageNode> LineageNodes => Set<LineageNode>();
+    public DbSet<Tag> Tags => Set<Tag>();
+    public DbSet<AccessPolicy> AccessPolicys => Set<AccessPolicy>();
+    public DbSet<Alert> Alerts => Set<Alert>();
+    public DbSet<Subscriber> Subscribers => Set<Subscriber>();
+    public DbSet<BusinessGlossaryTerm> BusinessGlossaryTerms => Set<BusinessGlossaryTerm>();
+    public DbSet<RecommendationScenario> RecommendationScenarios => Set<RecommendationScenario>();
+    public DbSet<FraudScenario> FraudScenarios => Set<FraudScenario>();
+    public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,61 +60,61 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<AnalyticsWorkspace>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("AnalyticsWorkspace_Id");
 
         // AnalyticsWorkspace has one or more DataSources of type DataSource
         modelBuilder.Entity<DataSource>()
             .HasOne<AnalyticsWorkspace>()
             .WithMany(parent => parent.DataSources)
-            .HasForeignKey("DataSources_Id");
+            .HasForeignKey("AnalyticsWorkspace_Id");
 
         // AnalyticsWorkspace has one or more Pipelines of type DataPipeline
         modelBuilder.Entity<DataPipeline>()
             .HasOne<AnalyticsWorkspace>()
             .WithMany(parent => parent.Pipelines)
-            .HasForeignKey("Pipelines_Id");
+            .HasForeignKey("AnalyticsWorkspace_Id");
 
         // AnalyticsWorkspace has one or more Dashboards of type Dashboard
         modelBuilder.Entity<Dashboard>()
             .HasOne<AnalyticsWorkspace>()
             .WithMany(parent => parent.Dashboards)
-            .HasForeignKey("Dashboards_Id");
+            .HasForeignKey("AnalyticsWorkspace_Id");
 
         // AnalyticsWorkspace has one or more Reports of type Report
         modelBuilder.Entity<Report>()
             .HasOne<AnalyticsWorkspace>()
             .WithMany(parent => parent.Reports)
-            .HasForeignKey("Reports_Id");
+            .HasForeignKey("AnalyticsWorkspace_Id");
 
         // AnalyticsWorkspace has one or more Notebooks of type Notebook
         modelBuilder.Entity<Notebook>()
             .HasOne<AnalyticsWorkspace>()
             .WithMany(parent => parent.Notebooks)
-            .HasForeignKey("Notebooks_Id");
+            .HasForeignKey("AnalyticsWorkspace_Id");
 
         // AnalyticsWorkspace has one or more Models of type Model_
         modelBuilder.Entity<Model_>()
             .HasOne<AnalyticsWorkspace>()
             .WithMany(parent => parent.Models)
-            .HasForeignKey("Models_Id");
+            .HasForeignKey("AnalyticsWorkspace_Id");
 
         // AnalyticsWorkspace has one or more FeatureSets of type FeatureSet
         modelBuilder.Entity<FeatureSet>()
             .HasOne<AnalyticsWorkspace>()
             .WithMany(parent => parent.FeatureSets)
-            .HasForeignKey("FeatureSets_Id");
+            .HasForeignKey("AnalyticsWorkspace_Id");
 
         // AnalyticsWorkspace has one or more Policies of type AccessPolicy
         modelBuilder.Entity<AccessPolicy>()
             .HasOne<AnalyticsWorkspace>()
             .WithMany(parent => parent.Policies)
-            .HasForeignKey("Policies_Id");
+            .HasForeignKey("AnalyticsWorkspace_Id");
 
         // AnalyticsWorkspace has one or more LineageNodes of type LineageNode
         modelBuilder.Entity<LineageNode>()
             .HasOne<AnalyticsWorkspace>()
             .WithMany(parent => parent.LineageNodes)
-            .HasForeignKey("LineageNodes_Id");
+            .HasForeignKey("AnalyticsWorkspace_Id");
 
         // DataSource has one Workspace of type AnalyticsWorkspace
         modelBuilder.Entity<DataSource>()
@@ -127,13 +127,13 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<DataSource>()
             .WithMany(parent => parent.ProducedDatasets)
-            .HasForeignKey("ProducedDatasets_Id");
+            .HasForeignKey("DataSource_Id");
 
         // DataSource has one or more Pipelines of type DataPipeline
         modelBuilder.Entity<DataPipeline>()
             .HasOne<DataSource>()
             .WithMany(parent => parent.Pipelines)
-            .HasForeignKey("Pipelines_Id");
+            .HasForeignKey("DataSource_Id");
 
         // DataSet has one Workspace of type AnalyticsWorkspace
         modelBuilder.Entity<DataSet>()
@@ -152,49 +152,49 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSource>()
             .HasOne<DataSet>()
             .WithMany(parent => parent.Sources)
-            .HasForeignKey("Sources_Id");
+            .HasForeignKey("DataSet_Id");
 
         // DataSet has one or more Pipelines of type DataPipeline
         modelBuilder.Entity<DataPipeline>()
             .HasOne<DataSet>()
             .WithMany(parent => parent.Pipelines)
-            .HasForeignKey("Pipelines_Id");
+            .HasForeignKey("DataSet_Id");
 
         // DataSet has one or more SemanticModels of type SemanticModel
         modelBuilder.Entity<SemanticModel>()
             .HasOne<DataSet>()
             .WithMany(parent => parent.SemanticModels)
-            .HasForeignKey("SemanticModels_Id");
+            .HasForeignKey("DataSet_Id");
 
         // DataSet has one or more Dimensions of type Dimension
         modelBuilder.Entity<Dimension>()
             .HasOne<DataSet>()
             .WithMany(parent => parent.Dimensions)
-            .HasForeignKey("Dimensions_Id");
+            .HasForeignKey("DataSet_Id");
 
         // DataSet has one or more Measures of type Measure
         modelBuilder.Entity<Measure>()
             .HasOne<DataSet>()
             .WithMany(parent => parent.Measures)
-            .HasForeignKey("Measures_Id");
+            .HasForeignKey("DataSet_Id");
 
         // DataSet has one or more Metrics of type Metric
         modelBuilder.Entity<Metric>()
             .HasOne<DataSet>()
             .WithMany(parent => parent.Metrics)
-            .HasForeignKey("Metrics_Id");
+            .HasForeignKey("DataSet_Id");
 
         // DataSet has one or more QualityRules of type QualityRule
         modelBuilder.Entity<QualityRule>()
             .HasOne<DataSet>()
             .WithMany(parent => parent.QualityRules)
-            .HasForeignKey("QualityRules_Id");
+            .HasForeignKey("DataSet_Id");
 
         // DataSet has one or more Tags of type Tag
         modelBuilder.Entity<Tag>()
             .HasOne<DataSet>()
             .WithMany(parent => parent.Tags)
-            .HasForeignKey("Tags_Id");
+            .HasForeignKey("DataSet_Id");
 
         // DataPipeline has one Workspace of type AnalyticsWorkspace
         modelBuilder.Entity<DataPipeline>()
@@ -213,19 +213,19 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataTask>()
             .HasOne<DataPipeline>()
             .WithMany(parent => parent.Tasks)
-            .HasForeignKey("Tasks_Id");
+            .HasForeignKey("DataPipeline_Id");
 
         // DataPipeline has one or more Sources of type DataSource
         modelBuilder.Entity<DataSource>()
             .HasOne<DataPipeline>()
             .WithMany(parent => parent.Sources)
-            .HasForeignKey("Sources_Id");
+            .HasForeignKey("DataPipeline_Id");
 
         // DataPipeline has one or more Outputs of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<DataPipeline>()
             .WithMany(parent => parent.Outputs)
-            .HasForeignKey("Outputs_Id");
+            .HasForeignKey("DataPipeline_Id");
 
         // DataTask has one Pipeline of type DataPipeline
         modelBuilder.Entity<DataTask>()
@@ -238,44 +238,44 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<DataTask>()
             .WithMany(parent => parent.InputDatasets)
-            .HasForeignKey("InputDatasets_Id");
+            .HasForeignKey("DataTask_Id");
 
         // DataTask has one or more OutputDatasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<DataTask>()
             .WithMany(parent => parent.OutputDatasets)
-            .HasForeignKey("OutputDatasets_Id");
+            .HasForeignKey("DataTask_Id");
 
 
         // SemanticModel has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<SemanticModel>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("SemanticModel_Id");
 
         // SemanticModel has one or more Metrics of type Metric
         modelBuilder.Entity<Metric>()
             .HasOne<SemanticModel>()
             .WithMany(parent => parent.Metrics)
-            .HasForeignKey("Metrics_Id");
+            .HasForeignKey("SemanticModel_Id");
 
         // SemanticModel has one or more Dimensions of type Dimension
         modelBuilder.Entity<Dimension>()
             .HasOne<SemanticModel>()
             .WithMany(parent => parent.Dimensions)
-            .HasForeignKey("Dimensions_Id");
+            .HasForeignKey("SemanticModel_Id");
 
         // SemanticModel has one or more Measures of type Measure
         modelBuilder.Entity<Measure>()
             .HasOne<SemanticModel>()
             .WithMany(parent => parent.Measures)
-            .HasForeignKey("Measures_Id");
+            .HasForeignKey("SemanticModel_Id");
 
         // SemanticModel has one or more GlossaryTerms of type BusinessGlossaryTerm
         modelBuilder.Entity<BusinessGlossaryTerm>()
             .HasOne<SemanticModel>()
             .WithMany(parent => parent.GlossaryTerms)
-            .HasForeignKey("GlossaryTerms_Id");
+            .HasForeignKey("SemanticModel_Id");
 
         // Dimension has one SemanticModel of type SemanticModel
         modelBuilder.Entity<Dimension>()
@@ -288,13 +288,13 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<Dimension>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("Dimension_Id");
 
         // Dimension has one or more GlossaryTerms of type BusinessGlossaryTerm
         modelBuilder.Entity<BusinessGlossaryTerm>()
             .HasOne<Dimension>()
             .WithMany(parent => parent.GlossaryTerms)
-            .HasForeignKey("GlossaryTerms_Id");
+            .HasForeignKey("Dimension_Id");
 
         // Measure has one SemanticModel of type SemanticModel
         modelBuilder.Entity<Measure>()
@@ -307,13 +307,13 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<Measure>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("Measure_Id");
 
         // Measure has one or more GlossaryTerms of type BusinessGlossaryTerm
         modelBuilder.Entity<BusinessGlossaryTerm>()
             .HasOne<Measure>()
             .WithMany(parent => parent.GlossaryTerms)
-            .HasForeignKey("GlossaryTerms_Id");
+            .HasForeignKey("Measure_Id");
 
         // Metric has one SemanticModel of type SemanticModel
         modelBuilder.Entity<Metric>()
@@ -326,25 +326,25 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<Metric>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("Metric_Id");
 
         // Metric has one or more GlossaryTerms of type BusinessGlossaryTerm
         modelBuilder.Entity<BusinessGlossaryTerm>()
             .HasOne<Metric>()
             .WithMany(parent => parent.GlossaryTerms)
-            .HasForeignKey("GlossaryTerms_Id");
+            .HasForeignKey("Metric_Id");
 
         // Metric has one or more Alerts of type Alert
         modelBuilder.Entity<Alert>()
             .HasOne<Metric>()
             .WithMany(parent => parent.Alerts)
-            .HasForeignKey("Alerts_Id");
+            .HasForeignKey("Metric_Id");
 
         // Metric has one or more Visualizations of type Visualization
         modelBuilder.Entity<Visualization>()
             .HasOne<Metric>()
             .WithMany(parent => parent.Visualizations)
-            .HasForeignKey("Visualizations_Id");
+            .HasForeignKey("Metric_Id");
 
         // Report has one Workspace of type AnalyticsWorkspace
         modelBuilder.Entity<Report>()
@@ -357,31 +357,31 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<Visualization>()
             .HasOne<Report>()
             .WithMany(parent => parent.Visualizations)
-            .HasForeignKey("Visualizations_Id");
+            .HasForeignKey("Report_Id");
 
         // Report has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<Report>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("Report_Id");
 
         // Report has one or more SemanticModels of type SemanticModel
         modelBuilder.Entity<SemanticModel>()
             .HasOne<Report>()
             .WithMany(parent => parent.SemanticModels)
-            .HasForeignKey("SemanticModels_Id");
+            .HasForeignKey("Report_Id");
 
         // Report has one or more Queries of type BIQuery
         modelBuilder.Entity<BIQuery>()
             .HasOne<Report>()
             .WithMany(parent => parent.Queries)
-            .HasForeignKey("Queries_Id");
+            .HasForeignKey("Report_Id");
 
         // Report has one or more Tags of type Tag
         modelBuilder.Entity<Tag>()
             .HasOne<Report>()
             .WithMany(parent => parent.Tags)
-            .HasForeignKey("Tags_Id");
+            .HasForeignKey("Report_Id");
 
         // Dashboard has one Workspace of type AnalyticsWorkspace
         modelBuilder.Entity<Dashboard>()
@@ -394,37 +394,37 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<Visualization>()
             .HasOne<Dashboard>()
             .WithMany(parent => parent.Visualizations)
-            .HasForeignKey("Visualizations_Id");
+            .HasForeignKey("Dashboard_Id");
 
         // Dashboard has one or more Reports of type Report
         modelBuilder.Entity<Report>()
             .HasOne<Dashboard>()
             .WithMany(parent => parent.Reports)
-            .HasForeignKey("Reports_Id");
+            .HasForeignKey("Dashboard_Id");
 
         // Dashboard has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<Dashboard>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("Dashboard_Id");
 
         // Dashboard has one or more Alerts of type Alert
         modelBuilder.Entity<Alert>()
             .HasOne<Dashboard>()
             .WithMany(parent => parent.Alerts)
-            .HasForeignKey("Alerts_Id");
+            .HasForeignKey("Dashboard_Id");
 
         // Dashboard has one or more Queries of type BIQuery
         modelBuilder.Entity<BIQuery>()
             .HasOne<Dashboard>()
             .WithMany(parent => parent.Queries)
-            .HasForeignKey("Queries_Id");
+            .HasForeignKey("Dashboard_Id");
 
         // Dashboard has one or more Tags of type Tag
         modelBuilder.Entity<Tag>()
             .HasOne<Dashboard>()
             .WithMany(parent => parent.Tags)
-            .HasForeignKey("Tags_Id");
+            .HasForeignKey("Dashboard_Id");
 
         // Visualization has one Dashboard of type Dashboard
         modelBuilder.Entity<Visualization>()
@@ -443,19 +443,19 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<Metric>()
             .HasOne<Visualization>()
             .WithMany(parent => parent.Metrics)
-            .HasForeignKey("Metrics_Id");
+            .HasForeignKey("Visualization_Id");
 
         // Visualization has one or more Dimensions of type Dimension
         modelBuilder.Entity<Dimension>()
             .HasOne<Visualization>()
             .WithMany(parent => parent.Dimensions)
-            .HasForeignKey("Dimensions_Id");
+            .HasForeignKey("Visualization_Id");
 
         // Visualization has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<Visualization>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("Visualization_Id");
 
         // Notebook has one Workspace of type AnalyticsWorkspace
         modelBuilder.Entity<Notebook>()
@@ -468,19 +468,19 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<Notebook>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("Notebook_Id");
 
         // Notebook has one or more Experiments of type Experiment
         modelBuilder.Entity<Experiment>()
             .HasOne<Notebook>()
             .WithMany(parent => parent.Experiments)
-            .HasForeignKey("Experiments_Id");
+            .HasForeignKey("Notebook_Id");
 
         // Notebook has one or more Queries of type BIQuery
         modelBuilder.Entity<BIQuery>()
             .HasOne<Notebook>()
             .WithMany(parent => parent.Queries)
-            .HasForeignKey("Queries_Id");
+            .HasForeignKey("Notebook_Id");
 
         // BIQuery has one Workspace of type AnalyticsWorkspace
         modelBuilder.Entity<BIQuery>()
@@ -493,25 +493,25 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<BIQuery>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("BIQuery_Id");
 
         // BIQuery has one or more Reports of type Report
         modelBuilder.Entity<Report>()
             .HasOne<BIQuery>()
             .WithMany(parent => parent.Reports)
-            .HasForeignKey("Reports_Id");
+            .HasForeignKey("BIQuery_Id");
 
         // BIQuery has one or more Dashboards of type Dashboard
         modelBuilder.Entity<Dashboard>()
             .HasOne<BIQuery>()
             .WithMany(parent => parent.Dashboards)
-            .HasForeignKey("Dashboards_Id");
+            .HasForeignKey("BIQuery_Id");
 
         // BIQuery has one or more Notebooks of type Notebook
         modelBuilder.Entity<Notebook>()
             .HasOne<BIQuery>()
             .WithMany(parent => parent.Notebooks)
-            .HasForeignKey("Notebooks_Id");
+            .HasForeignKey("BIQuery_Id");
 
         // Experiment has one Workspace of type AnalyticsWorkspace
         modelBuilder.Entity<Experiment>()
@@ -524,19 +524,19 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<TrainingRun>()
             .HasOne<Experiment>()
             .WithMany(parent => parent.TrainingRuns)
-            .HasForeignKey("TrainingRuns_Id");
+            .HasForeignKey("Experiment_Id");
 
         // Experiment has one or more Models of type Model_
         modelBuilder.Entity<Model_>()
             .HasOne<Experiment>()
             .WithMany(parent => parent.Models)
-            .HasForeignKey("Models_Id");
+            .HasForeignKey("Experiment_Id");
 
         // Experiment has one or more Notebooks of type Notebook
         modelBuilder.Entity<Notebook>()
             .HasOne<Experiment>()
             .WithMany(parent => parent.Notebooks)
-            .HasForeignKey("Notebooks_Id");
+            .HasForeignKey("Experiment_Id");
 
         // TrainingRun has one Experiment of type Experiment
         modelBuilder.Entity<TrainingRun>()
@@ -555,25 +555,25 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<TrainingRun>()
             .WithMany(parent => parent.InputDatasets)
-            .HasForeignKey("InputDatasets_Id");
+            .HasForeignKey("TrainingRun_Id");
 
         // TrainingRun has one or more Features of type Feature
         modelBuilder.Entity<Feature>()
             .HasOne<TrainingRun>()
             .WithMany(parent => parent.Features)
-            .HasForeignKey("Features_Id");
+            .HasForeignKey("TrainingRun_Id");
 
         // TrainingRun has one or more RunMetrics of type RunMetric
         modelBuilder.Entity<RunMetric>()
             .HasOne<TrainingRun>()
             .WithMany(parent => parent.RunMetrics)
-            .HasForeignKey("RunMetrics_Id");
+            .HasForeignKey("TrainingRun_Id");
 
         // TrainingRun has one or more RunParameters of type RunParameter
         modelBuilder.Entity<RunParameter>()
             .HasOne<TrainingRun>()
             .WithMany(parent => parent.RunParameters)
-            .HasForeignKey("RunParameters_Id");
+            .HasForeignKey("TrainingRun_Id");
 
         // RunMetric has one TrainingRun of type TrainingRun
         modelBuilder.Entity<RunMetric>()
@@ -612,25 +612,25 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<ModelVersion>()
             .HasOne<Model_>()
             .WithMany(parent => parent.Versions)
-            .HasForeignKey("Versions_Id");
+            .HasForeignKey("Model__Id");
 
         // Model_ has one or more FeatureSets of type FeatureSet
         modelBuilder.Entity<FeatureSet>()
             .HasOne<Model_>()
             .WithMany(parent => parent.FeatureSets)
-            .HasForeignKey("FeatureSets_Id");
+            .HasForeignKey("Model__Id");
 
         // Model_ has one or more Experiments of type Experiment
         modelBuilder.Entity<Experiment>()
             .HasOne<Model_>()
             .WithMany(parent => parent.Experiments)
-            .HasForeignKey("Experiments_Id");
+            .HasForeignKey("Model__Id");
 
         // Model_ has one or more Tags of type Tag
         modelBuilder.Entity<Tag>()
             .HasOne<Model_>()
             .WithMany(parent => parent.Tags)
-            .HasForeignKey("Tags_Id");
+            .HasForeignKey("Model__Id");
 
         // ModelVersion has one Model_ of type Model_
         modelBuilder.Entity<ModelVersion>()
@@ -649,25 +649,25 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<EvaluationMetric>()
             .HasOne<ModelVersion>()
             .WithMany(parent => parent.EvaluationMetrics)
-            .HasForeignKey("EvaluationMetrics_Id");
+            .HasForeignKey("ModelVersion_Id");
 
         // ModelVersion has one or more Deployments of type InferenceEndpoint
         modelBuilder.Entity<InferenceEndpoint>()
             .HasOne<ModelVersion>()
             .WithMany(parent => parent.Deployments)
-            .HasForeignKey("Deployments_Id");
+            .HasForeignKey("ModelVersion_Id");
 
         // ModelVersion has one or more FeatureSets of type FeatureSet
         modelBuilder.Entity<FeatureSet>()
             .HasOne<ModelVersion>()
             .WithMany(parent => parent.FeatureSets)
-            .HasForeignKey("FeatureSets_Id");
+            .HasForeignKey("ModelVersion_Id");
 
         // ModelVersion has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<ModelVersion>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("ModelVersion_Id");
 
         // EvaluationMetric has one ModelVersion of type ModelVersion
         modelBuilder.Entity<EvaluationMetric>()
@@ -699,31 +699,31 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<Feature>()
             .HasOne<FeatureSet>()
             .WithMany(parent => parent.Features)
-            .HasForeignKey("Features_Id");
+            .HasForeignKey("FeatureSet_Id");
 
         // FeatureSet has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<FeatureSet>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("FeatureSet_Id");
 
         // FeatureSet has one or more Models of type Model_
         modelBuilder.Entity<Model_>()
             .HasOne<FeatureSet>()
             .WithMany(parent => parent.Models)
-            .HasForeignKey("Models_Id");
+            .HasForeignKey("FeatureSet_Id");
 
         // FeatureSet has one or more ModelVersions of type ModelVersion
         modelBuilder.Entity<ModelVersion>()
             .HasOne<FeatureSet>()
             .WithMany(parent => parent.ModelVersions)
-            .HasForeignKey("ModelVersions_Id");
+            .HasForeignKey("FeatureSet_Id");
 
         // FeatureSet has one or more Tags of type Tag
         modelBuilder.Entity<Tag>()
             .HasOne<FeatureSet>()
             .WithMany(parent => parent.Tags)
-            .HasForeignKey("Tags_Id");
+            .HasForeignKey("FeatureSet_Id");
 
         // Feature has one FeatureSet of type FeatureSet
         modelBuilder.Entity<Feature>()
@@ -736,19 +736,19 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<Feature>()
             .WithMany(parent => parent.SourceDatasets)
-            .HasForeignKey("SourceDatasets_Id");
+            .HasForeignKey("Feature_Id");
 
         // Feature has one or more Models of type Model_
         modelBuilder.Entity<Model_>()
             .HasOne<Feature>()
             .WithMany(parent => parent.Models)
-            .HasForeignKey("Models_Id");
+            .HasForeignKey("Feature_Id");
 
         // Feature has one or more TrainingRuns of type TrainingRun
         modelBuilder.Entity<TrainingRun>()
             .HasOne<Feature>()
             .WithMany(parent => parent.TrainingRuns)
-            .HasForeignKey("TrainingRuns_Id");
+            .HasForeignKey("Feature_Id");
 
         // InferenceEndpoint has one ModelVersion of type ModelVersion
         modelBuilder.Entity<InferenceEndpoint>()
@@ -767,7 +767,7 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<Prediction>()
             .HasOne<InferenceEndpoint>()
             .WithMany(parent => parent.Predictions)
-            .HasForeignKey("Predictions_Id");
+            .HasForeignKey("InferenceEndpoint_Id");
 
         // Prediction has one Endpoint of type InferenceEndpoint
         modelBuilder.Entity<Prediction>()
@@ -805,26 +805,26 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<Forecast>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("Forecast_Id");
 
 
         // TimeSeries has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<TimeSeries>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("TimeSeries_Id");
 
         // TimeSeries has one or more Forecasts of type Forecast
         modelBuilder.Entity<Forecast>()
             .HasOne<TimeSeries>()
             .WithMany(parent => parent.Forecasts)
-            .HasForeignKey("Forecasts_Id");
+            .HasForeignKey("TimeSeries_Id");
 
         // TimeSeries has one or more Anomalies of type Anomaly
         modelBuilder.Entity<Anomaly>()
             .HasOne<TimeSeries>()
             .WithMany(parent => parent.Anomalies)
-            .HasForeignKey("Anomalies_Id");
+            .HasForeignKey("TimeSeries_Id");
 
         // Anomaly has one TimeSeries of type TimeSeries
         modelBuilder.Entity<Anomaly>()
@@ -856,7 +856,7 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<QualityCheck>()
             .HasOne<QualityRule>()
             .WithMany(parent => parent.Checks)
-            .HasForeignKey("Checks_Id");
+            .HasForeignKey("QualityRule_Id");
 
         // QualityCheck has one Rule of type QualityRule
         modelBuilder.Entity<QualityCheck>()
@@ -882,86 +882,86 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<LineageNode>()
             .HasOne<LineageNode>()
             .WithMany(parent => parent.Inputs)
-            .HasForeignKey("Inputs_Id");
+            .HasForeignKey("LineageNode_Id");
 
         // LineageNode has one or more Outputs of type LineageNode
         modelBuilder.Entity<LineageNode>()
             .HasOne<LineageNode>()
             .WithMany(parent => parent.Outputs)
-            .HasForeignKey("Outputs_Id");
+            .HasForeignKey("LineageNode_Id");
 
         // LineageNode has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<LineageNode>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("LineageNode_Id");
 
         // LineageNode has one or more Models of type Model_
         modelBuilder.Entity<Model_>()
             .HasOne<LineageNode>()
             .WithMany(parent => parent.Models)
-            .HasForeignKey("Models_Id");
+            .HasForeignKey("LineageNode_Id");
 
         // LineageNode has one or more Pipelines of type DataPipeline
         modelBuilder.Entity<DataPipeline>()
             .HasOne<LineageNode>()
             .WithMany(parent => parent.Pipelines)
-            .HasForeignKey("Pipelines_Id");
+            .HasForeignKey("LineageNode_Id");
 
         // LineageNode has one or more Dashboards of type Dashboard
         modelBuilder.Entity<Dashboard>()
             .HasOne<LineageNode>()
             .WithMany(parent => parent.Dashboards)
-            .HasForeignKey("Dashboards_Id");
+            .HasForeignKey("LineageNode_Id");
 
         // LineageNode has one or more Reports of type Report
         modelBuilder.Entity<Report>()
             .HasOne<LineageNode>()
             .WithMany(parent => parent.Reports)
-            .HasForeignKey("Reports_Id");
+            .HasForeignKey("LineageNode_Id");
 
 
         // Tag has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<Tag>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("Tag_Id");
 
         // Tag has one or more Models of type Model_
         modelBuilder.Entity<Model_>()
             .HasOne<Tag>()
             .WithMany(parent => parent.Models)
-            .HasForeignKey("Models_Id");
+            .HasForeignKey("Tag_Id");
 
         // Tag has one or more ModelVersions of type ModelVersion
         modelBuilder.Entity<ModelVersion>()
             .HasOne<Tag>()
             .WithMany(parent => parent.ModelVersions)
-            .HasForeignKey("ModelVersions_Id");
+            .HasForeignKey("Tag_Id");
 
         // Tag has one or more Dashboards of type Dashboard
         modelBuilder.Entity<Dashboard>()
             .HasOne<Tag>()
             .WithMany(parent => parent.Dashboards)
-            .HasForeignKey("Dashboards_Id");
+            .HasForeignKey("Tag_Id");
 
         // Tag has one or more Reports of type Report
         modelBuilder.Entity<Report>()
             .HasOne<Tag>()
             .WithMany(parent => parent.Reports)
-            .HasForeignKey("Reports_Id");
+            .HasForeignKey("Tag_Id");
 
         // Tag has one or more FeatureSets of type FeatureSet
         modelBuilder.Entity<FeatureSet>()
             .HasOne<Tag>()
             .WithMany(parent => parent.FeatureSets)
-            .HasForeignKey("FeatureSets_Id");
+            .HasForeignKey("Tag_Id");
 
         // Tag has one or more Metrics of type Metric
         modelBuilder.Entity<Metric>()
             .HasOne<Tag>()
             .WithMany(parent => parent.Metrics)
-            .HasForeignKey("Metrics_Id");
+            .HasForeignKey("Tag_Id");
 
         // AccessPolicy has one Workspace of type AnalyticsWorkspace
         modelBuilder.Entity<AccessPolicy>()
@@ -974,31 +974,31 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<DataSet>()
             .HasOne<AccessPolicy>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("AccessPolicy_Id");
 
         // AccessPolicy has one or more Dashboards of type Dashboard
         modelBuilder.Entity<Dashboard>()
             .HasOne<AccessPolicy>()
             .WithMany(parent => parent.Dashboards)
-            .HasForeignKey("Dashboards_Id");
+            .HasForeignKey("AccessPolicy_Id");
 
         // AccessPolicy has one or more Reports of type Report
         modelBuilder.Entity<Report>()
             .HasOne<AccessPolicy>()
             .WithMany(parent => parent.Reports)
-            .HasForeignKey("Reports_Id");
+            .HasForeignKey("AccessPolicy_Id");
 
         // AccessPolicy has one or more Models of type Model_
         modelBuilder.Entity<Model_>()
             .HasOne<AccessPolicy>()
             .WithMany(parent => parent.Models)
-            .HasForeignKey("Models_Id");
+            .HasForeignKey("AccessPolicy_Id");
 
         // AccessPolicy has one or more FeatureSets of type FeatureSet
         modelBuilder.Entity<FeatureSet>()
             .HasOne<AccessPolicy>()
             .WithMany(parent => parent.FeatureSets)
-            .HasForeignKey("FeatureSets_Id");
+            .HasForeignKey("AccessPolicy_Id");
 
         // Alert has one Metric of type Metric
         modelBuilder.Entity<Alert>()
@@ -1029,101 +1029,101 @@ public DbSet<FraudSignal> FraudSignals => Set<FraudSignal>();
         modelBuilder.Entity<Anomaly>()
             .HasOne<Alert>()
             .WithMany(parent => parent.Anomalies)
-            .HasForeignKey("Anomalies_Id");
+            .HasForeignKey("Alert_Id");
 
         // Alert has one or more Subscribers of type Subscriber
         modelBuilder.Entity<Subscriber>()
             .HasOne<Alert>()
             .WithMany(parent => parent.Subscribers)
-            .HasForeignKey("Subscribers_Id");
+            .HasForeignKey("Alert_Id");
 
 
         // Subscriber has one or more Alerts of type Alert
         modelBuilder.Entity<Alert>()
             .HasOne<Subscriber>()
             .WithMany(parent => parent.Alerts)
-            .HasForeignKey("Alerts_Id");
+            .HasForeignKey("Subscriber_Id");
 
 
         // BusinessGlossaryTerm has one or more RelatedTerms of type BusinessGlossaryTerm
         modelBuilder.Entity<BusinessGlossaryTerm>()
             .HasOne<BusinessGlossaryTerm>()
             .WithMany(parent => parent.RelatedTerms)
-            .HasForeignKey("RelatedTerms_Id");
+            .HasForeignKey("BusinessGlossaryTerm_Id");
 
         // BusinessGlossaryTerm has one or more Metrics of type Metric
         modelBuilder.Entity<Metric>()
             .HasOne<BusinessGlossaryTerm>()
             .WithMany(parent => parent.Metrics)
-            .HasForeignKey("Metrics_Id");
+            .HasForeignKey("BusinessGlossaryTerm_Id");
 
         // BusinessGlossaryTerm has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<BusinessGlossaryTerm>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("BusinessGlossaryTerm_Id");
 
         // BusinessGlossaryTerm has one or more Dimensions of type Dimension
         modelBuilder.Entity<Dimension>()
             .HasOne<BusinessGlossaryTerm>()
             .WithMany(parent => parent.Dimensions)
-            .HasForeignKey("Dimensions_Id");
+            .HasForeignKey("BusinessGlossaryTerm_Id");
 
         // BusinessGlossaryTerm has one or more Measures of type Measure
         modelBuilder.Entity<Measure>()
             .HasOne<BusinessGlossaryTerm>()
             .WithMany(parent => parent.Measures)
-            .HasForeignKey("Measures_Id");
+            .HasForeignKey("BusinessGlossaryTerm_Id");
 
 
         // RecommendationScenario has one or more Models of type Model_
         modelBuilder.Entity<Model_>()
             .HasOne<RecommendationScenario>()
             .WithMany(parent => parent.Models)
-            .HasForeignKey("Models_Id");
+            .HasForeignKey("RecommendationScenario_Id");
 
         // RecommendationScenario has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<RecommendationScenario>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("RecommendationScenario_Id");
 
         // RecommendationScenario has one or more Experiments of type Experiment
         modelBuilder.Entity<Experiment>()
             .HasOne<RecommendationScenario>()
             .WithMany(parent => parent.Experiments)
-            .HasForeignKey("Experiments_Id");
+            .HasForeignKey("RecommendationScenario_Id");
 
         // RecommendationScenario has one or more Alerts of type Alert
         modelBuilder.Entity<Alert>()
             .HasOne<RecommendationScenario>()
             .WithMany(parent => parent.Alerts)
-            .HasForeignKey("Alerts_Id");
+            .HasForeignKey("RecommendationScenario_Id");
 
 
         // FraudScenario has one or more Models of type Model_
         modelBuilder.Entity<Model_>()
             .HasOne<FraudScenario>()
             .WithMany(parent => parent.Models)
-            .HasForeignKey("Models_Id");
+            .HasForeignKey("FraudScenario_Id");
 
         // FraudScenario has one or more Datasets of type DataSet
         modelBuilder.Entity<DataSet>()
             .HasOne<FraudScenario>()
             .WithMany(parent => parent.Datasets)
-            .HasForeignKey("Datasets_Id");
+            .HasForeignKey("FraudScenario_Id");
 
         // FraudScenario has one or more Alerts of type Alert
         modelBuilder.Entity<Alert>()
             .HasOne<FraudScenario>()
             .WithMany(parent => parent.Alerts)
-            .HasForeignKey("Alerts_Id");
+            .HasForeignKey("FraudScenario_Id");
 
         // FraudScenario has one or more Signals of type FraudSignal
         modelBuilder.Entity<FraudSignal>()
             .HasOne<FraudScenario>()
             .WithMany(parent => parent.Signals)
-            .HasForeignKey("Signals_Id");
+            .HasForeignKey("FraudScenario_Id");
 
         // FraudSignal has one Scenario of type FraudScenario
         modelBuilder.Entity<FraudSignal>()

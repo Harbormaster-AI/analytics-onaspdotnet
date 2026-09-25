@@ -1,3 +1,4 @@
+
 using analyticsonaspdotnet.Contracts;
 
 namespace analyticsonaspdotnet.Domain;

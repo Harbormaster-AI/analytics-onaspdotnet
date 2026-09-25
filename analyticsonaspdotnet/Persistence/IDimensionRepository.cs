@@ -1,4 +1,5 @@
 using analyticsonaspdotnet.Domain;
+using analyticsonaspdotnet.Contracts;
 
 namespace analyticsonaspdotnet.Persistence;
 
@@ -9,4 +10,10 @@ public interface IDimensionRepository
     Task AddAsync(Dimension dimension, CancellationToken cancellationToken);
     Task UpdateAsync(Dimension dimension, CancellationToken cancellationToken);
     Task DeleteAsync(Dimension dimension, CancellationToken cancellationToken);
+
+    Task AddToDatasetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDatasetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToGlossaryTermsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromGlossaryTermsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+
 }

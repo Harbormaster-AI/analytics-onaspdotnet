@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -44,4 +47,149 @@ public class MetricRepository : IMetricRepository
         _db.Metrics.Remove(metric);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToDatasetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromDatasetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id) &&
+                EF.Property<Guid?>(
+                    dataSet,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToGlossaryTermsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.BusinessGlossaryTerms
+            .Where(businessGlossaryTerm =>
+                request.ChildIds.Contains(businessGlossaryTerm.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    businessGlossaryTerm =>
+                        EF.Property<Guid?>(
+                            businessGlossaryTerm,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromGlossaryTermsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.BusinessGlossaryTerms
+            .Where(businessGlossaryTerm =>
+                request.ChildIds.Contains(businessGlossaryTerm.Id) &&
+                EF.Property<Guid?>(
+                    businessGlossaryTerm,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    businessGlossaryTerm =>
+                        EF.Property<Guid?>(
+                            businessGlossaryTerm,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToAlertsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Alerts
+            .Where(alert =>
+                request.ChildIds.Contains(alert.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    alert =>
+                        EF.Property<Guid?>(
+                            alert,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromAlertsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Alerts
+            .Where(alert =>
+                request.ChildIds.Contains(alert.Id) &&
+                EF.Property<Guid?>(
+                    alert,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    alert =>
+                        EF.Property<Guid?>(
+                            alert,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToVisualizationsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Visualizations
+            .Where(visualization =>
+                request.ChildIds.Contains(visualization.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    visualization =>
+                        EF.Property<Guid?>(
+                            visualization,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromVisualizationsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Visualizations
+            .Where(visualization =>
+                request.ChildIds.Contains(visualization.Id) &&
+                EF.Property<Guid?>(
+                    visualization,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    visualization =>
+                        EF.Property<Guid?>(
+                            visualization,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
 }

@@ -1,4 +1,5 @@
 using analyticsonaspdotnet.Domain;
+using analyticsonaspdotnet.Contracts;
 
 namespace analyticsonaspdotnet.Persistence;
 
@@ -9,4 +10,6 @@ public interface IEvaluationMetricRepository
     Task AddAsync(EvaluationMetric evaluationMetric, CancellationToken cancellationToken);
     Task UpdateAsync(EvaluationMetric evaluationMetric, CancellationToken cancellationToken);
     Task DeleteAsync(EvaluationMetric evaluationMetric, CancellationToken cancellationToken);
+
+
 }

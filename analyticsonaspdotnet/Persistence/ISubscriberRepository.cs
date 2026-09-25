@@ -1,4 +1,5 @@
 using analyticsonaspdotnet.Domain;
+using analyticsonaspdotnet.Contracts;
 
 namespace analyticsonaspdotnet.Persistence;
 
@@ -9,4 +10,8 @@ public interface ISubscriberRepository
     Task AddAsync(Subscriber subscriber, CancellationToken cancellationToken);
     Task UpdateAsync(Subscriber subscriber, CancellationToken cancellationToken);
     Task DeleteAsync(Subscriber subscriber, CancellationToken cancellationToken);
+
+    Task AddToAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+
 }

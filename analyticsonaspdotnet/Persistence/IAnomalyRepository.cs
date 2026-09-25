@@ -1,4 +1,5 @@
 using analyticsonaspdotnet.Domain;
+using analyticsonaspdotnet.Contracts;
 
 namespace analyticsonaspdotnet.Persistence;
 
@@ -9,4 +10,6 @@ public interface IAnomalyRepository
     Task AddAsync(Anomaly anomaly, CancellationToken cancellationToken);
     Task UpdateAsync(Anomaly anomaly, CancellationToken cancellationToken);
     Task DeleteAsync(Anomaly anomaly, CancellationToken cancellationToken);
+
+
 }

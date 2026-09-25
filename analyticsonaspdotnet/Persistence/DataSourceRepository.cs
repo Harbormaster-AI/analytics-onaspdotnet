@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -44,4 +47,77 @@ public class DataSourceRepository : IDataSourceRepository
         _db.DataSources.Remove(dataSource);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToProducedDatasetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromProducedDatasetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id) &&
+                EF.Property<Guid?>(
+                    dataSet,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToPipelinesAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataPipelines
+            .Where(dataPipeline =>
+                request.ChildIds.Contains(dataPipeline.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataPipeline =>
+                        EF.Property<Guid?>(
+                            dataPipeline,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromPipelinesAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataPipelines
+            .Where(dataPipeline =>
+                request.ChildIds.Contains(dataPipeline.Id) &&
+                EF.Property<Guid?>(
+                    dataPipeline,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataPipeline =>
+                        EF.Property<Guid?>(
+                            dataPipeline,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
 }

@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -46,4 +49,41 @@ public class InferenceEndpointRepository : IInferenceEndpointRepository
         _db.InferenceEndpoints.Remove(inferenceEndpoint);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToPredictionsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Predictions
+            .Where(prediction =>
+                request.ChildIds.Contains(prediction.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    prediction =>
+                        EF.Property<Guid?>(
+                            prediction,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromPredictionsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Predictions
+            .Where(prediction =>
+                request.ChildIds.Contains(prediction.Id) &&
+                EF.Property<Guid?>(
+                    prediction,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    prediction =>
+                        EF.Property<Guid?>(
+                            prediction,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
 }

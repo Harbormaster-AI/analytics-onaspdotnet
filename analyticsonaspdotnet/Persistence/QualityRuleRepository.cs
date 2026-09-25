@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -44,4 +47,41 @@ public class QualityRuleRepository : IQualityRuleRepository
         _db.QualityRules.Remove(qualityRule);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToChecksAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.QualityChecks
+            .Where(qualityCheck =>
+                request.ChildIds.Contains(qualityCheck.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    qualityCheck =>
+                        EF.Property<Guid?>(
+                            qualityCheck,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromChecksAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.QualityChecks
+            .Where(qualityCheck =>
+                request.ChildIds.Contains(qualityCheck.Id) &&
+                EF.Property<Guid?>(
+                    qualityCheck,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    qualityCheck =>
+                        EF.Property<Guid?>(
+                            qualityCheck,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
 }

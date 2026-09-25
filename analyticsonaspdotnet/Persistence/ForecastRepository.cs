@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -46,4 +49,41 @@ public class ForecastRepository : IForecastRepository
         _db.Forecasts.Remove(forecast);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToDatasetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromDatasetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id) &&
+                EF.Property<Guid?>(
+                    dataSet,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
 }

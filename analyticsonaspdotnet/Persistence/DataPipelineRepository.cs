@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -46,4 +49,113 @@ public class DataPipelineRepository : IDataPipelineRepository
         _db.DataPipelines.Remove(dataPipeline);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToTasksAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataTasks
+            .Where(dataTask =>
+                request.ChildIds.Contains(dataTask.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataTask =>
+                        EF.Property<Guid?>(
+                            dataTask,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromTasksAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataTasks
+            .Where(dataTask =>
+                request.ChildIds.Contains(dataTask.Id) &&
+                EF.Property<Guid?>(
+                    dataTask,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataTask =>
+                        EF.Property<Guid?>(
+                            dataTask,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToSourcesAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSources
+            .Where(dataSource =>
+                request.ChildIds.Contains(dataSource.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSource =>
+                        EF.Property<Guid?>(
+                            dataSource,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromSourcesAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSources
+            .Where(dataSource =>
+                request.ChildIds.Contains(dataSource.Id) &&
+                EF.Property<Guid?>(
+                    dataSource,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSource =>
+                        EF.Property<Guid?>(
+                            dataSource,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToOutputsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromOutputsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id) &&
+                EF.Property<Guid?>(
+                    dataSet,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
 }

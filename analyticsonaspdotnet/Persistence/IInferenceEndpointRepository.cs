@@ -1,4 +1,5 @@
 using analyticsonaspdotnet.Domain;
+using analyticsonaspdotnet.Contracts;
 
 namespace analyticsonaspdotnet.Persistence;
 
@@ -9,4 +10,8 @@ public interface IInferenceEndpointRepository
     Task AddAsync(InferenceEndpoint inferenceEndpoint, CancellationToken cancellationToken);
     Task UpdateAsync(InferenceEndpoint inferenceEndpoint, CancellationToken cancellationToken);
     Task DeleteAsync(InferenceEndpoint inferenceEndpoint, CancellationToken cancellationToken);
+
+    Task AddToPredictionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPredictionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+
 }

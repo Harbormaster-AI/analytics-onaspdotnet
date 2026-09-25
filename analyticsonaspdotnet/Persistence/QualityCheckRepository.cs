@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -46,4 +49,5 @@ public class QualityCheckRepository : IQualityCheckRepository
         _db.QualityChecks.Remove(qualityCheck);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
 }

@@ -1,4 +1,5 @@
 using analyticsonaspdotnet.Domain;
+using analyticsonaspdotnet.Contracts;
 
 namespace analyticsonaspdotnet.Persistence;
 
@@ -9,4 +10,6 @@ public interface IQualityCheckRepository
     Task AddAsync(QualityCheck qualityCheck, CancellationToken cancellationToken);
     Task UpdateAsync(QualityCheck qualityCheck, CancellationToken cancellationToken);
     Task DeleteAsync(QualityCheck qualityCheck, CancellationToken cancellationToken);
+
+
 }

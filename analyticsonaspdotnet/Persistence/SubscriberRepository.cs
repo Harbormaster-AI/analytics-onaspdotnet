@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -42,4 +45,41 @@ public class SubscriberRepository : ISubscriberRepository
         _db.Subscribers.Remove(subscriber);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToAlertsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Alerts
+            .Where(alert =>
+                request.ChildIds.Contains(alert.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    alert =>
+                        EF.Property<Guid?>(
+                            alert,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromAlertsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Alerts
+            .Where(alert =>
+                request.ChildIds.Contains(alert.Id) &&
+                EF.Property<Guid?>(
+                    alert,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    alert =>
+                        EF.Property<Guid?>(
+                            alert,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
 }

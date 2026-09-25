@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -44,4 +47,113 @@ public class NotebookRepository : INotebookRepository
         _db.Notebooks.Remove(notebook);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToDatasetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromDatasetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id) &&
+                EF.Property<Guid?>(
+                    dataSet,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToExperimentsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Experiments
+            .Where(experiment =>
+                request.ChildIds.Contains(experiment.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    experiment =>
+                        EF.Property<Guid?>(
+                            experiment,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromExperimentsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Experiments
+            .Where(experiment =>
+                request.ChildIds.Contains(experiment.Id) &&
+                EF.Property<Guid?>(
+                    experiment,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    experiment =>
+                        EF.Property<Guid?>(
+                            experiment,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToQueriesAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.BIQuerys
+            .Where(bIQuery =>
+                request.ChildIds.Contains(bIQuery.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    bIQuery =>
+                        EF.Property<Guid?>(
+                            bIQuery,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromQueriesAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.BIQuerys
+            .Where(bIQuery =>
+                request.ChildIds.Contains(bIQuery.Id) &&
+                EF.Property<Guid?>(
+                    bIQuery,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    bIQuery =>
+                        EF.Property<Guid?>(
+                            bIQuery,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
 }

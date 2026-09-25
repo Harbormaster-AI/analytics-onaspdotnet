@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace analyticsonaspdotnet.Domain;
 
+
     [ComplexType]
     public record ConnectionInfo_(
     string Host,

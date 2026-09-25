@@ -1,4 +1,5 @@
 using analyticsonaspdotnet.Domain;
+using analyticsonaspdotnet.Contracts;
 
 namespace analyticsonaspdotnet.Persistence;
 
@@ -9,4 +10,6 @@ public interface IRunMetricRepository
     Task AddAsync(RunMetric runMetric, CancellationToken cancellationToken);
     Task UpdateAsync(RunMetric runMetric, CancellationToken cancellationToken);
     Task DeleteAsync(RunMetric runMetric, CancellationToken cancellationToken);
+
+
 }

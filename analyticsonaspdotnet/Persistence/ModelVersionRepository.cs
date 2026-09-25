@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -46,4 +49,149 @@ public class ModelVersionRepository : IModelVersionRepository
         _db.ModelVersions.Remove(modelVersion);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToEvaluationMetricsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.EvaluationMetrics
+            .Where(evaluationMetric =>
+                request.ChildIds.Contains(evaluationMetric.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    evaluationMetric =>
+                        EF.Property<Guid?>(
+                            evaluationMetric,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromEvaluationMetricsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.EvaluationMetrics
+            .Where(evaluationMetric =>
+                request.ChildIds.Contains(evaluationMetric.Id) &&
+                EF.Property<Guid?>(
+                    evaluationMetric,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    evaluationMetric =>
+                        EF.Property<Guid?>(
+                            evaluationMetric,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToDeploymentsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.InferenceEndpoints
+            .Where(inferenceEndpoint =>
+                request.ChildIds.Contains(inferenceEndpoint.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    inferenceEndpoint =>
+                        EF.Property<Guid?>(
+                            inferenceEndpoint,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromDeploymentsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.InferenceEndpoints
+            .Where(inferenceEndpoint =>
+                request.ChildIds.Contains(inferenceEndpoint.Id) &&
+                EF.Property<Guid?>(
+                    inferenceEndpoint,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    inferenceEndpoint =>
+                        EF.Property<Guid?>(
+                            inferenceEndpoint,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToFeatureSetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.FeatureSets
+            .Where(featureSet =>
+                request.ChildIds.Contains(featureSet.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    featureSet =>
+                        EF.Property<Guid?>(
+                            featureSet,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromFeatureSetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.FeatureSets
+            .Where(featureSet =>
+                request.ChildIds.Contains(featureSet.Id) &&
+                EF.Property<Guid?>(
+                    featureSet,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    featureSet =>
+                        EF.Property<Guid?>(
+                            featureSet,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToDatasetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromDatasetsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.DataSets
+            .Where(dataSet =>
+                request.ChildIds.Contains(dataSet.Id) &&
+                EF.Property<Guid?>(
+                    dataSet,
+                    "FraudSignal_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    dataSet =>
+                        EF.Property<Guid?>(
+                            dataSet,
+                            "FraudSignal_Id"),
+                    (Guid?)null));
+    }
+
 }

@@ -1,4 +1,7 @@
+
+using analyticsonaspdotnet.Contracts;
 using analyticsonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace analyticsonaspdotnet.Persistence;
@@ -48,4 +51,5 @@ public class PredictionRepository : IPredictionRepository
         _db.Predictions.Remove(prediction);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
 }

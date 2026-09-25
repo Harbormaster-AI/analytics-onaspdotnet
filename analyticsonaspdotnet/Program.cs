@@ -1,7 +1,8 @@
 using analyticsonaspdotnet.Api;
 using analyticsonaspdotnet.Persistence;
 using analyticsonaspdotnet.Service;
-
+using analyticsonaspdotnet.Telemetry;
+using OpenTelemetry.Metrics;
 using Microsoft.EntityFrameworkCore;
 using Oracle.EntityFrameworkCore;
 
@@ -11,7 +12,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddOpenApi();
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<ApplicationDbContext>();
-
 
 var dbEngineEnvironment = builder.Configuration["DB_TYPE"];
 
@@ -113,87 +113,104 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     // etc.
 });
 
-builder.Services.AddScoped<IAnalyticsWorkspaceRepository, AnalyticsWorkspaceRepository>();
-builder.Services.AddScoped<IDataSourceRepository, DataSourceRepository>();
-builder.Services.AddScoped<IDataSetRepository, DataSetRepository>();
-builder.Services.AddScoped<IDataPipelineRepository, DataPipelineRepository>();
-builder.Services.AddScoped<IDataTaskRepository, DataTaskRepository>();
-builder.Services.AddScoped<ISemanticModelRepository, SemanticModelRepository>();
-builder.Services.AddScoped<IDimensionRepository, DimensionRepository>();
-builder.Services.AddScoped<IMeasureRepository, MeasureRepository>();
-builder.Services.AddScoped<IMetricRepository, MetricRepository>();
-builder.Services.AddScoped<IReportRepository, ReportRepository>();
-builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
-builder.Services.AddScoped<IVisualizationRepository, VisualizationRepository>();
-builder.Services.AddScoped<INotebookRepository, NotebookRepository>();
-builder.Services.AddScoped<IBIQueryRepository, BIQueryRepository>();
-builder.Services.AddScoped<IExperimentRepository, ExperimentRepository>();
-builder.Services.AddScoped<ITrainingRunRepository, TrainingRunRepository>();
-builder.Services.AddScoped<IRunMetricRepository, RunMetricRepository>();
-builder.Services.AddScoped<IRunParameterRepository, RunParameterRepository>();
-builder.Services.AddScoped<IModel_Repository, Model_Repository>();
-builder.Services.AddScoped<IModelVersionRepository, ModelVersionRepository>();
-builder.Services.AddScoped<IEvaluationMetricRepository, EvaluationMetricRepository>();
-builder.Services.AddScoped<IFeatureSetRepository, FeatureSetRepository>();
-builder.Services.AddScoped<IFeatureRepository, FeatureRepository>();
-builder.Services.AddScoped<IInferenceEndpointRepository, InferenceEndpointRepository>();
-builder.Services.AddScoped<IPredictionRepository, PredictionRepository>();
-builder.Services.AddScoped<IForecastRepository, ForecastRepository>();
-builder.Services.AddScoped<ITimeSeriesRepository, TimeSeriesRepository>();
-builder.Services.AddScoped<IAnomalyRepository, AnomalyRepository>();
-builder.Services.AddScoped<IQualityRuleRepository, QualityRuleRepository>();
-builder.Services.AddScoped<IQualityCheckRepository, QualityCheckRepository>();
-builder.Services.AddScoped<ILineageNodeRepository, LineageNodeRepository>();
-builder.Services.AddScoped<ITagRepository, TagRepository>();
-builder.Services.AddScoped<IAccessPolicyRepository, AccessPolicyRepository>();
-builder.Services.AddScoped<IAlertRepository, AlertRepository>();
-builder.Services.AddScoped<ISubscriberRepository, SubscriberRepository>();
-builder.Services.AddScoped<IBusinessGlossaryTermRepository, BusinessGlossaryTermRepository>();
-builder.Services.AddScoped<IRecommendationScenarioRepository, RecommendationScenarioRepository>();
-builder.Services.AddScoped<IFraudScenarioRepository, FraudScenarioRepository>();
-builder.Services.AddScoped<IFraudSignalRepository, FraudSignalRepository>();
+    builder.Services.AddScoped<IAnalyticsWorkspaceRepository, AnalyticsWorkspaceRepository>();
+    builder.Services.AddScoped<IDataSourceRepository, DataSourceRepository>();
+    builder.Services.AddScoped<IDataSetRepository, DataSetRepository>();
+    builder.Services.AddScoped<IDataPipelineRepository, DataPipelineRepository>();
+    builder.Services.AddScoped<IDataTaskRepository, DataTaskRepository>();
+    builder.Services.AddScoped<ISemanticModelRepository, SemanticModelRepository>();
+    builder.Services.AddScoped<IDimensionRepository, DimensionRepository>();
+    builder.Services.AddScoped<IMeasureRepository, MeasureRepository>();
+    builder.Services.AddScoped<IMetricRepository, MetricRepository>();
+    builder.Services.AddScoped<IReportRepository, ReportRepository>();
+    builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+    builder.Services.AddScoped<IVisualizationRepository, VisualizationRepository>();
+    builder.Services.AddScoped<INotebookRepository, NotebookRepository>();
+    builder.Services.AddScoped<IBIQueryRepository, BIQueryRepository>();
+    builder.Services.AddScoped<IExperimentRepository, ExperimentRepository>();
+    builder.Services.AddScoped<ITrainingRunRepository, TrainingRunRepository>();
+    builder.Services.AddScoped<IRunMetricRepository, RunMetricRepository>();
+    builder.Services.AddScoped<IRunParameterRepository, RunParameterRepository>();
+    builder.Services.AddScoped<IModel_Repository, Model_Repository>();
+    builder.Services.AddScoped<IModelVersionRepository, ModelVersionRepository>();
+    builder.Services.AddScoped<IEvaluationMetricRepository, EvaluationMetricRepository>();
+    builder.Services.AddScoped<IFeatureSetRepository, FeatureSetRepository>();
+    builder.Services.AddScoped<IFeatureRepository, FeatureRepository>();
+    builder.Services.AddScoped<IInferenceEndpointRepository, InferenceEndpointRepository>();
+    builder.Services.AddScoped<IPredictionRepository, PredictionRepository>();
+    builder.Services.AddScoped<IForecastRepository, ForecastRepository>();
+    builder.Services.AddScoped<ITimeSeriesRepository, TimeSeriesRepository>();
+    builder.Services.AddScoped<IAnomalyRepository, AnomalyRepository>();
+    builder.Services.AddScoped<IQualityRuleRepository, QualityRuleRepository>();
+    builder.Services.AddScoped<IQualityCheckRepository, QualityCheckRepository>();
+    builder.Services.AddScoped<ILineageNodeRepository, LineageNodeRepository>();
+    builder.Services.AddScoped<ITagRepository, TagRepository>();
+    builder.Services.AddScoped<IAccessPolicyRepository, AccessPolicyRepository>();
+    builder.Services.AddScoped<IAlertRepository, AlertRepository>();
+    builder.Services.AddScoped<ISubscriberRepository, SubscriberRepository>();
+    builder.Services.AddScoped<IBusinessGlossaryTermRepository, BusinessGlossaryTermRepository>();
+    builder.Services.AddScoped<IRecommendationScenarioRepository, RecommendationScenarioRepository>();
+    builder.Services.AddScoped<IFraudScenarioRepository, FraudScenarioRepository>();
+    builder.Services.AddScoped<IFraudSignalRepository, FraudSignalRepository>();
 
-builder.Services.AddScoped<IAnalyticsWorkspaceService, AnalyticsWorkspaceService>();
-builder.Services.AddScoped<IDataSourceService, DataSourceService>();
-builder.Services.AddScoped<IDataSetService, DataSetService>();
-builder.Services.AddScoped<IDataPipelineService, DataPipelineService>();
-builder.Services.AddScoped<IDataTaskService, DataTaskService>();
-builder.Services.AddScoped<ISemanticModelService, SemanticModelService>();
-builder.Services.AddScoped<IDimensionService, DimensionService>();
-builder.Services.AddScoped<IMeasureService, MeasureService>();
-builder.Services.AddScoped<IMetricService, MetricService>();
-builder.Services.AddScoped<IReportService, ReportService>();
-builder.Services.AddScoped<IDashboardService, DashboardService>();
-builder.Services.AddScoped<IVisualizationService, VisualizationService>();
-builder.Services.AddScoped<INotebookService, NotebookService>();
-builder.Services.AddScoped<IBIQueryService, BIQueryService>();
-builder.Services.AddScoped<IExperimentService, ExperimentService>();
-builder.Services.AddScoped<ITrainingRunService, TrainingRunService>();
-builder.Services.AddScoped<IRunMetricService, RunMetricService>();
-builder.Services.AddScoped<IRunParameterService, RunParameterService>();
-builder.Services.AddScoped<IModel_Service, Model_Service>();
-builder.Services.AddScoped<IModelVersionService, ModelVersionService>();
-builder.Services.AddScoped<IEvaluationMetricService, EvaluationMetricService>();
-builder.Services.AddScoped<IFeatureSetService, FeatureSetService>();
-builder.Services.AddScoped<IFeatureService, FeatureService>();
-builder.Services.AddScoped<IInferenceEndpointService, InferenceEndpointService>();
-builder.Services.AddScoped<IPredictionService, PredictionService>();
-builder.Services.AddScoped<IForecastService, ForecastService>();
-builder.Services.AddScoped<ITimeSeriesService, TimeSeriesService>();
-builder.Services.AddScoped<IAnomalyService, AnomalyService>();
-builder.Services.AddScoped<IQualityRuleService, QualityRuleService>();
-builder.Services.AddScoped<IQualityCheckService, QualityCheckService>();
-builder.Services.AddScoped<ILineageNodeService, LineageNodeService>();
-builder.Services.AddScoped<ITagService, TagService>();
-builder.Services.AddScoped<IAccessPolicyService, AccessPolicyService>();
-builder.Services.AddScoped<IAlertService, AlertService>();
-builder.Services.AddScoped<ISubscriberService, SubscriberService>();
-builder.Services.AddScoped<IBusinessGlossaryTermService, BusinessGlossaryTermService>();
-builder.Services.AddScoped<IRecommendationScenarioService, RecommendationScenarioService>();
-builder.Services.AddScoped<IFraudScenarioService, FraudScenarioService>();
-builder.Services.AddScoped<IFraudSignalService, FraudSignalService>();
+    builder.Services.AddScoped<IAnalyticsWorkspaceService, AnalyticsWorkspaceService>();
+    builder.Services.AddScoped<IDataSourceService, DataSourceService>();
+    builder.Services.AddScoped<IDataSetService, DataSetService>();
+    builder.Services.AddScoped<IDataPipelineService, DataPipelineService>();
+    builder.Services.AddScoped<IDataTaskService, DataTaskService>();
+    builder.Services.AddScoped<ISemanticModelService, SemanticModelService>();
+    builder.Services.AddScoped<IDimensionService, DimensionService>();
+    builder.Services.AddScoped<IMeasureService, MeasureService>();
+    builder.Services.AddScoped<IMetricService, MetricService>();
+    builder.Services.AddScoped<IReportService, ReportService>();
+    builder.Services.AddScoped<IDashboardService, DashboardService>();
+    builder.Services.AddScoped<IVisualizationService, VisualizationService>();
+    builder.Services.AddScoped<INotebookService, NotebookService>();
+    builder.Services.AddScoped<IBIQueryService, BIQueryService>();
+    builder.Services.AddScoped<IExperimentService, ExperimentService>();
+    builder.Services.AddScoped<ITrainingRunService, TrainingRunService>();
+    builder.Services.AddScoped<IRunMetricService, RunMetricService>();
+    builder.Services.AddScoped<IRunParameterService, RunParameterService>();
+    builder.Services.AddScoped<IModel_Service, Model_Service>();
+    builder.Services.AddScoped<IModelVersionService, ModelVersionService>();
+    builder.Services.AddScoped<IEvaluationMetricService, EvaluationMetricService>();
+    builder.Services.AddScoped<IFeatureSetService, FeatureSetService>();
+    builder.Services.AddScoped<IFeatureService, FeatureService>();
+    builder.Services.AddScoped<IInferenceEndpointService, InferenceEndpointService>();
+    builder.Services.AddScoped<IPredictionService, PredictionService>();
+    builder.Services.AddScoped<IForecastService, ForecastService>();
+    builder.Services.AddScoped<ITimeSeriesService, TimeSeriesService>();
+    builder.Services.AddScoped<IAnomalyService, AnomalyService>();
+    builder.Services.AddScoped<IQualityRuleService, QualityRuleService>();
+    builder.Services.AddScoped<IQualityCheckService, QualityCheckService>();
+    builder.Services.AddScoped<ILineageNodeService, LineageNodeService>();
+    builder.Services.AddScoped<ITagService, TagService>();
+    builder.Services.AddScoped<IAccessPolicyService, AccessPolicyService>();
+    builder.Services.AddScoped<IAlertService, AlertService>();
+    builder.Services.AddScoped<ISubscriberService, SubscriberService>();
+    builder.Services.AddScoped<IBusinessGlossaryTermService, BusinessGlossaryTermService>();
+    builder.Services.AddScoped<IRecommendationScenarioService, RecommendationScenarioService>();
+    builder.Services.AddScoped<IFraudScenarioService, FraudScenarioService>();
+    builder.Services.AddScoped<IFraudSignalService, FraudSignalService>();
+
+// apply the service resolver
+builder.Services.AddScoped<IServiceResolver, ServiceResolver>();
+
+builder.Services.AddSingleton<ApplicationTelemetry>();
+
+builder.Services
+    .AddOpenTelemetry()
+    .WithMetrics(metrics =>
+    {
+        metrics.AddMeter("Harbormaster.Application");
+
+        metrics.AddPrometheusExporter();
+    });
 
 var app = builder.Build();
+
+app.MapPrometheusScrapingEndpoint();
+
 
 // Health endpoint
 app.MapHealthChecks("/health");
@@ -222,45 +239,45 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-app.MapAnalyticsWorkspaceEndpoints();
-app.MapDataSourceEndpoints();
-app.MapDataSetEndpoints();
-app.MapDataPipelineEndpoints();
-app.MapDataTaskEndpoints();
-app.MapSemanticModelEndpoints();
-app.MapDimensionEndpoints();
-app.MapMeasureEndpoints();
-app.MapMetricEndpoints();
-app.MapReportEndpoints();
-app.MapDashboardEndpoints();
-app.MapVisualizationEndpoints();
-app.MapNotebookEndpoints();
-app.MapBIQueryEndpoints();
-app.MapExperimentEndpoints();
-app.MapTrainingRunEndpoints();
-app.MapRunMetricEndpoints();
-app.MapRunParameterEndpoints();
-app.MapModel_Endpoints();
-app.MapModelVersionEndpoints();
-app.MapEvaluationMetricEndpoints();
-app.MapFeatureSetEndpoints();
-app.MapFeatureEndpoints();
-app.MapInferenceEndpointEndpoints();
-app.MapPredictionEndpoints();
-app.MapForecastEndpoints();
-app.MapTimeSeriesEndpoints();
-app.MapAnomalyEndpoints();
-app.MapQualityRuleEndpoints();
-app.MapQualityCheckEndpoints();
-app.MapLineageNodeEndpoints();
-app.MapTagEndpoints();
-app.MapAccessPolicyEndpoints();
-app.MapAlertEndpoints();
-app.MapSubscriberEndpoints();
-app.MapBusinessGlossaryTermEndpoints();
-app.MapRecommendationScenarioEndpoints();
-app.MapFraudScenarioEndpoints();
-app.MapFraudSignalEndpoints();
+    app.MapAnalyticsWorkspaceEndpoints();
+    app.MapDataSourceEndpoints();
+    app.MapDataSetEndpoints();
+    app.MapDataPipelineEndpoints();
+    app.MapDataTaskEndpoints();
+    app.MapSemanticModelEndpoints();
+    app.MapDimensionEndpoints();
+    app.MapMeasureEndpoints();
+    app.MapMetricEndpoints();
+    app.MapReportEndpoints();
+    app.MapDashboardEndpoints();
+    app.MapVisualizationEndpoints();
+    app.MapNotebookEndpoints();
+    app.MapBIQueryEndpoints();
+    app.MapExperimentEndpoints();
+    app.MapTrainingRunEndpoints();
+    app.MapRunMetricEndpoints();
+    app.MapRunParameterEndpoints();
+    app.MapModel_Endpoints();
+    app.MapModelVersionEndpoints();
+    app.MapEvaluationMetricEndpoints();
+    app.MapFeatureSetEndpoints();
+    app.MapFeatureEndpoints();
+    app.MapInferenceEndpointEndpoints();
+    app.MapPredictionEndpoints();
+    app.MapForecastEndpoints();
+    app.MapTimeSeriesEndpoints();
+    app.MapAnomalyEndpoints();
+    app.MapQualityRuleEndpoints();
+    app.MapQualityCheckEndpoints();
+    app.MapLineageNodeEndpoints();
+    app.MapTagEndpoints();
+    app.MapAccessPolicyEndpoints();
+    app.MapAlertEndpoints();
+    app.MapSubscriberEndpoints();
+    app.MapBusinessGlossaryTermEndpoints();
+    app.MapRecommendationScenarioEndpoints();
+    app.MapFraudScenarioEndpoints();
+    app.MapFraudSignalEndpoints();
 
 app.Run();
 
